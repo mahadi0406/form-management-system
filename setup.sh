@@ -14,6 +14,11 @@ fi
 echo "🐳 Building Docker containers..."
 docker compose up -d --build
 
+
+# Step 2.1: Mark safe Git directory (if needed)
+echo "🛡️ Marking /var/www/html as safe for Git..."
+docker exec -it form_management_app git config --global --add safe.directory /var/www/html
+
 # Step 3: Install Composer dependencies
 echo "📦 Installing PHP dependencies..."
 docker exec -it form_management_app composer install

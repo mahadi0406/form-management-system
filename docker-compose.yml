@@ -19,10 +19,10 @@ services:
     container_name: form_management_db
     restart: unless-stopped
     environment:
-      MYSQL_DATABASE: laravel12_forms
+      MYSQL_DATABASE: form_management_db
       MYSQL_ROOT_PASSWORD: root_password
       MYSQL_PASSWORD: password
-      MYSQL_USER: laravel_user
+      MYSQL_USER: form_management_user
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
     volumes:
