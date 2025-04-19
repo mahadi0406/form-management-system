@@ -1,4 +1,4 @@
-export interface Field {
+export interface FormField {
     type: string;
     name: string;
     label?: string;
@@ -18,7 +18,8 @@ export interface FormConfiguration {
     title: string;
     method: 'GET' | 'POST';
     action: string;
-    fields: Field[];
+    fields: FormField[];
+    [key: string]: any;
 }
 
 export interface Form {

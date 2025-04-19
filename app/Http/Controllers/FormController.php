@@ -19,14 +19,18 @@ class FormController extends Controller
     /**
      * Display a listing of forms.
      */
-    public function index()
+    public function create(): \Inertia\Response
+    {
+        return Inertia::render('Forms/Create');
+    }
+
+    /**
+     * Display a listing of forms.
+     */
+    public function index(): \Inertia\Response
     {
         $forms = Form::select('id', 'title', 'created_at')->latest()->get();
-        $totalForms = 12;
-        return Inertia::render('Dashboard', [
-            'recentForms' => $recentForms ?? [],
-            'totalForms' => $totalForms,
-        ]);
+        return Inertia::render('Forms/Index', compact('forms'));
     }
 
 
