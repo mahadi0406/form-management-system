@@ -31,10 +31,17 @@ docker exec -it form_management_app php artisan key:generate
 echo "🧬 Running migrations..."
 docker exec -it form_management_app php artisan migrate:fresh
 
+# Step 8: Reset ownership on host (for local dev convenience)
+echo "🧹 Resetting file ownership on host..."
+sudo chown -R $USER:$USER .
+
 # Step 6: Set permissions
 echo "🔐 Setting storage permissions..."
 docker exec -it form_management_app chmod -R 775 storage bootstrap/cache
 docker exec -it form_management_app chown -R www-data:www-data storage bootstrap/cache
+docker exec -it form_management_app chmod -R 775 storage/logs
+docker exec -it form_management_app chown -R www-data:www-data storage/logs
+
 
 # Step 7: Install NPM dependencies & build assets
 echo "🎨 Installing frontend dependencies..."
@@ -42,9 +49,5 @@ docker exec -it form_management_app npm install
 
 echo "🛠️ Building Vue app..."
 docker exec -it form_management_app npm run build
-
-# Step 8: Reset ownership on host (for local dev convenience)
-echo "🧹 Resetting file ownership on host..."
-sudo chown -R $USER:$USER .
 
 echo "✅ Setup complete. App running at: http://localhost:8000"

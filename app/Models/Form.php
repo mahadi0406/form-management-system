@@ -14,6 +14,6 @@ class Form extends Model
     ];
 
     protected $casts = [
-        'configuration' => 'json',
+        'configuration' => 'array',
     ];
 }
