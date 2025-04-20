@@ -77,4 +77,12 @@ class FormController extends Controller
 
         return Inertia::location(route('forms.index'));
     }
+
+
+    public function preview(int $id): \Inertia\Response
+    {
+        $form = Form::findOrFail($id);
+        return Inertia::render('Forms/Preview', ['form' => $form]);
+    }
+
 }

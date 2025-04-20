@@ -4,6 +4,7 @@ namespace App\Http\Services;
 
 use App\Http\Requests\FormStoreRequest;
 use App\Models\Form;
+use Illuminate\Database\Eloquent\Collection;
 
 class FormService
 {
@@ -29,6 +30,18 @@ class FormService
     {
         return Form::create($data);
     }
+
+    public function getCount(): int
+    {
+        return Form::count();
+    }
+
+
+    public function getLatest(): Collection
+    {
+        return Form::latest()->take(5)->get();
+    }
+
 
 
 }
