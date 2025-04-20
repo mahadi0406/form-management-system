@@ -4,22 +4,16 @@ export interface FormField {
     label?: string;
     placeholder?: string;
     required?: boolean;
-    options?: Array<{
-        label: string;
-        value: string | number;
-    }>;
-    validation?: {
-        [key: string]: any;
-    };
-    defaultValue?: any;
 }
 
-export interface FormConfiguration {
+interface FormConfiguration {
     title: string;
-    method: 'GET' | 'POST';
+    method: string;
     action: string;
-    fields: FormField[];
-    [key: string]: any;
+    configuration: {
+        fields: FormField[];
+    };
+    [key: string]: any;  // Added index signature
 }
 
 export interface Form {

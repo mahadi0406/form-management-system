@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import AdminLayout from '@/Layouts/AdminLayout.vue';
 import { Head, useForm } from '@inertiajs/vue3';
-import { ref, computed } from 'vue';
-import {FormConfiguration, FormField} from "@/types/form";
+import { ref, computed, onMounted } from 'vue';
+import { FormConfiguration, FormField } from "@/types/form";
 
 interface Props {
+    form: FormConfiguration;
     savedConfigs?: FormConfiguration[];
 }
 
@@ -25,11 +26,12 @@ const fieldTypes = [
 ];
 
 const formConfig = useForm<FormConfiguration>({
-    title: '',
-    method: 'POST',
-    action: 'submit',
+    id: props.form.id,
+    title: props.form.title,
+    method: props.form.method,
+    action: props.form.action,
     configuration: {
-        fields: []
+        fields: props.form.configuration.fields || []
     }
 });
 
@@ -51,8 +53,14 @@ const selectedField = computed(() => {
     return formFields.value[selectedFieldIndex.value];
 });
 
+onMounted(() => {
+    // Initialize form fields from the provided form configuration
+    formFields.value = [...(props.form.configuration.fields || [])];
+    updateFields();
+});
+
 const updateFields = () => {
-    formConfig.fields = [...formFields.value];
+    formConfig.configuration.fields = [...formFields.value];
 };
 
 const addNewField = () => {
@@ -89,25 +97,14 @@ const saveFieldChanges = () => {
 };
 
 const submitForm = () => {
-    formConfig.fields = [...formFields.value];
+    formConfig.configuration.fields = [...formFields.value];
 
-    const form = useForm({
-        title: formConfig.title,
-        method: formConfig.method,
-        action: formConfig.action,
-        configuration: {
-            fields: formConfig.fields
-        }
-    });
-
-    form.post('/forms', {
+    formConfig.patch(`/forms/${props.form.id}`, {
         onSuccess: () => {
-            formFields.value = [];
-            selectedFieldIndex.value = null;
             window.location.href = '/forms';
         },
         onError: (errors) => {
-            console.error('Form submission errors:', errors);
+            console.error('Form update errors:', errors);
         }
     });
 };
@@ -116,17 +113,17 @@ const loadSavedConfig = (config: FormConfiguration) => {
     formConfig.title = config.title;
     formConfig.method = config.method;
     formConfig.action = config.action;
-    formFields.value = [...config.fields];
+    formFields.value = [...config.configuration.fields];
     updateFields();
 };
 </script>
 
 <template>
     <AdminLayout>
-        <Head title="Create Form" />
+        <Head title="Edit Form" />
 
         <div class="max-w-4xl mx-auto mt-8 p-6 bg-white rounded shadow">
-            <h2 class="text-2xl font-bold mb-4">Create New Form</h2>
+            <h2 class="text-2xl font-bold mb-4">Edit Form</h2>
 
             <div class="space-y-4">
                 <div>
@@ -276,8 +273,9 @@ const loadSavedConfig = (config: FormConfiguration) => {
 
             <hr class="my-6" />
 
-            <div class="flex justify-end space-x-4">
-                <button @click="submitForm" class="bg-blue-500 text-white px-4 py-2 rounded">Submit Form</button>
+            <div class="flex justify-between space-x-4">
+                <a href="/forms" class="px-4 py-2 text-gray-600 border border-gray-300 rounded">Cancel</a>
+                <button @click="submitForm" class="bg-blue-500 text-white px-4 py-2 rounded">Update Form</button>
             </div>
         </div>
     </AdminLayout>
