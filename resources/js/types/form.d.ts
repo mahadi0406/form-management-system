@@ -4,6 +4,20 @@ export interface FormField {
     label?: string;
     placeholder?: string;
     required?: boolean;
+    options?: Array<{
+        value: string;
+        label: string;
+    }>;
+    validationRules?: {
+        min?: number;
+        max?: number;
+        pattern?: string;
+        message?: string;
+        minLength?: number;
+        maxLength?: number;
+        custom?: string;
+    };
+    checked?: boolean;  // For checkbox default state
 }
 
 interface FormConfiguration {
