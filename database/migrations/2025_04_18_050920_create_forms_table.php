@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('method');
-            $table->string('action');
+            $table->string('action')->nullable();
             $table->json('configuration');
             $table->timestamps();
         });
