@@ -24,6 +24,9 @@ class FormStoreRequest extends FormRequest
             'configuration.fields.*.label' => ['nullable', 'string'],
             'configuration.fields.*.placeholder' => ['nullable', 'string'],
             'configuration.fields.*.required' => ['nullable', 'boolean'],
+            'configuration.fields.*.options' => ['nullable', 'array'],
+            'configuration.fields.*.options.*.value' => ['required_with:configuration.fields.*.options', 'string'],
+            'configuration.fields.*.options.*.label' => ['required_with:configuration.fields.*.options', 'string'],
         ];
     }
 }
