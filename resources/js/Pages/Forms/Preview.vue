@@ -156,9 +156,9 @@ const getFieldClass = (field: FormField): string => {
                                     :required="field.required"
                                     class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-indigo-600 sm:text-sm"
                                 >
-<!--                                    <option v-for="option in field.options" :key="option.value" :value="option.value">-->
-<!--                                        {{ option.label }}-->
-<!--                                    </option>-->
+                                    <option v-for="option in field.options" :key="option.value" :value="option.value">
+                                        {{ option.label }}
+                                    </option>
                                 </select>
                             </div>
 
@@ -178,18 +178,18 @@ const getFieldClass = (field: FormField): string => {
                             </div>
 
                             <div v-else-if="field.type === 'radio'" class="space-y-2">
-<!--                                <div v-for="option in field.options" :key="option.value" class="flex items-center">-->
-<!--                                    <input-->
-<!--                                        type="radio"-->
-<!--                                        :id="`${field.name}-${option.value}`"-->
-<!--                                        :name="field.name"-->
-<!--                                        :value="option.value"-->
-<!--                                        v-model="formData[field.name as string]"-->
-<!--                                        :required="field.required"-->
-<!--                                        class="form-radio text-indigo-600"-->
-<!--                                    />-->
-<!--                                    <label :for="`${field.name}-${option.value}`" class="ml-2 text-sm text-gray-700">{{ option.label }}</label>-->
-<!--                                </div>-->
+                                <div v-for="option in field.options" :key="option.value" class="flex items-center">
+                                    <input
+                                        type="radio"
+                                        :id="`${field.name}-${option.value}`"
+                                        :name="field.name"
+                                        :value="option.value"
+                                        v-model="formData[field.name as string]"
+                                        :required="field.required"
+                                        class="form-radio text-indigo-600"
+                                    />
+                                    <label :for="`${field.name}-${option.value}`" class="ml-2 text-sm text-gray-700">{{ option.label }}</label>
+                                </div>
                             </div>
 
                             <div v-else-if="field.type === 'date'">
